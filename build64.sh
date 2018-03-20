@@ -10,36 +10,11 @@ export LANG=C
 # sudo reboot
 # sudo apt install -y libncurses5-dev  bc build-essential gcc-aarch64-linux-gnu git unzip
 
-
 ## Sources:
-_commit=4d78845fd711bdd7c0f20aafb3c976073d86b4e3
-
-#  git clone -b 'rpi-4.14.y' --depth 100 https://github.com/raspberrypi/linux.git
-#  cd linux
-#  git checkout ${_commit}
-#
-#  OR:
-#
-if ! test -e "${_commit}.tar.gz" ;then
-  wget -c "https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
-fi
-if ! test -d "linux-${_commit}" ;then
-  tar xf ${_commit}.tar.gz
-fi
-cd linux-${_commit}
-
+git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git
+cd linux
 
 #  make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcmrpi3_defconfig
-
-# (ksoftirqd rollback before RT patch ...) MUST!!!
-patch -p1 --dry-run -i ../4cd13c21b207e80ddb1144c576500098f2d5f882.patch && \
-patch -p1           -i ../4cd13c21b207e80ddb1144c576500098f2d5f882.patch
-
-# (RT patch ...)
-export rt_patch="patch-4.14.27-rt21.patch.xz"
-wget -c -P .. https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/4.14/${rt_patch}
-xzcat ../${rt_patch} | patch -p1 --dry-run && \
-xzcat ../${rt_patch} | patch -p1
 
 # (EXTRA PATCHES for audio application ...)
 #   1. kernel-alsa-support-for-384khz-sample-rates ( ref: https://github.com/DigitalDreamtimeLtd/linux/commit/6224bb2a856146111815a1215732cad18df1d016.patch )
