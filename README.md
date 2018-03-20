@@ -2,8 +2,8 @@
 
 - RT kernel
 - 64bit
-- Currently only support Raspberry Pi 3 Model B
 - minimalized kernel modules/features for high quality audio playback
+- Currently only support Raspberry Pi 3 Model B
 
 # How to Build
 
@@ -13,7 +13,7 @@
     sudo apt install -y libncurses5-dev  bc build-essential gcc-aarch64-linux-gnu git unzip
 
     # 2. build kernel
-    ./build-arm64-rt-kernel-for-rpi3.sh
+    ./build64.sh
 
     # 3. install kernel tarball
     # copy kernel tarball to RPi ...
