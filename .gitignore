@@ -1,0 +1,10 @@
+*.gz
+*.img
+.DS_Store
+*.deb
+*.tar
+*.tgz
+*.tbz
+*.md5
+*.zip
+.bash_history
