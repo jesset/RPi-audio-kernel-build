@@ -3,7 +3,11 @@
 - RT kernel
 - 64bit
 - minimalized kernel modules/features for high quality audio playback
-- Currently only support Raspberry Pi 3 Model B
+    * disable IPv6/Netfilter/serial modules ... (not needed by audio playback, basically)
+    * Support PCM 352k8 and 384k sample rates [1]
+    * Support More USB DAC (native DSD) [2]
+- only support Raspberry Pi 3 Model B
+- only support ext4/fat filesystem
 
 # How to Build
 
@@ -21,14 +25,23 @@
     cd / && tar --no-same-owner -xf /path/to/kernel_tarball
 
     # 4. upgrade firmware (optional)
-    git clone https://github.com/raspberrypi/firmware.git
+    git clone --depth 1 https://github.com/raspberrypi/firmware.git
     cd firmware
     sudo cp -v start*.elf fixup*.dat bootcode.bin LICENCE.broadcom  /boot/
+
 
 # Ref
 
 https://isojed.nl/blog/2017/10/25/raspberry-pi-rt-preempt/
+
 https://www.raspberrypi.org/documentation/linux/kernel/building.md
+
 https://medium.com/@metebalci/latency-of-raspberry-pi-3-on-standard-and-real-time-linux-4-9-kernel-2d9c20704495
 
 https://devsidestory.com/build-a-64-bit-kernel-for-your-raspberry-pi-3/
+
+https://github.com/RoPieee/ropieee-kernel.git
+
+[1]: https://github.com/DigitalDreamtimeLtd/linux/commit/6224bb2a856146111815a1215732cad18df1d016.patch
+
+[2]: https://github.com/RoPieee/ropieee-kernel/blob/master/usb-dsd-quirks.patch
