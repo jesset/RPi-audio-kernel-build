@@ -24,9 +24,13 @@ patch -p1           -i ../kernel-alsa-support-for-384khz-sample-rates-for-4.14.2
 patch -p1 --dry-run -i ../usb-dsd-quirks-for-4.14.26.patch && \
 patch -p1           -i ../usb-dsd-quirks-for-4.14.26.patch
 
+# Add support for RPi3B+
+! test -e arch/arm64/boot/dts/broadcom/bcm2710-rpi-3-b-plus.dts && \
+patch -p1 --dry-run -i ../0001-This-commit-adds-support-for-RP3-B-Plus-in-in-arch-a.patch && \
+patch -p1           -i ../0001-This-commit-adds-support-for-RP3-B-Plus-in-in-arch-a.patch
 
 
-cp -v ../config-4.14.26-rt19-v8+-arm64 .config
+cp -v ../config-4.14.27-rt21-v8+-arm64 .config
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-  oldconfig
 # make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-  menuconfig
 #     set Kernel Features -> Preemption Model = Fully Preemptible Kernel (RT)
