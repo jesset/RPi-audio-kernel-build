@@ -11,8 +11,13 @@ export LANG=C
 # sudo apt install -y libncurses5-dev  bc build-essential gcc-aarch64-linux-gnu git unzip
 
 ## Sources:
-git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git
-cd linux
+if test -d linux;then
+  cd linux && git checkout . &&  git clean -fdX 
+else
+  git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git
+  cd linux
+fi
+
 
 #  make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcmrpi3_defconfig
 
