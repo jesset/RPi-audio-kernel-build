@@ -26,8 +26,8 @@ fi
 patch -p1 --dry-run -i ../kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch && \
 patch -p1           -i ../kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
 #   2. USB DAC quirks (ref: https://github.com/RoPieee/ropieee-kernel/blob/master/usb-dsd-quirks.patch )
-patch -p1 --dry-run -i ../usb-dsd-quirks-for-4.14.26.patch && \
-patch -p1           -i ../usb-dsd-quirks-for-4.14.26.patch
+patch -p1 --dry-run -i ../usb-dsd-quirks-for-4.14.patch && \
+patch -p1           -i ../usb-dsd-quirks-for-4.14.patch
 
 
 cp -v ../config-4.14-rt-arm64 .config
