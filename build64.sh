@@ -7,6 +7,7 @@ export LANG=C
 
 export USE_CCACHE=true
 export CCACHE_DIR=/tmp/ccache.rpikernelrt
+export CCACHE_LOGFILE=/tmp/ccache.rpikernelrt/ccache.log
 export ARCH=arm64
 export CROSS_COMPILE="ccache aarch64-linux-gnu-"
 
@@ -17,7 +18,7 @@ export CROSS_COMPILE="ccache aarch64-linux-gnu-"
 
 ## Sources:
 if test -d linux;then
-  cd linux && git checkout . &&  git clean -fdX 
+  cd linux && git checkout . &&  git clean -fdX
 else
   git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git
   cd linux
