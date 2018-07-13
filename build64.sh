@@ -24,7 +24,7 @@ else
   cd linux
 fi
 
-git checkout 32f5076d836518eaf2e7b2caa2e6ee196d27210b
+git checkout 36674db1d99952eb722669a69a659d6ba082847d
 
 #  make bcmrpi3_defconfig
 
