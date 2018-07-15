@@ -14,40 +14,31 @@ export LANG=C
 ## toolkit
 test -d ~/tools || git clone https://github.com/raspberrypi/tools.git ~/tools
 
+export USE_CCACHE=true
+export CCACHE_DIR=/tmp/ccache.rpikernelrt32
+export CCACHE_LOGFILE=/tmp/ccache.rpikernelrt32/ccache.log
+export CROSS_COMPILE="ccache aarch64-linux-gnu-"
+
 export KERNEL=kernel7
 export ARCH=arm
 export CONCURRENCY_LEVEL=$(nproc)
-export CROSS_COMPILE=~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-
+export CROSS_COMPILE="ccache $HOME/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin/arm-linux-gnueabihf-"
 # echo 'PATH=$PATH:~/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin' >> ~/.bashrc
 # source ~/.bashrc
 
 
 ## Sources:
-_commit=ad350a581a442f790b54abb81364295e937fe26b
-
-#  git clone -b 'rpi-4.14.y' --depth 100 https://github.com/raspberrypi/linux.git
-#  cd linux
-#  git checkout ${_commit}
-#
-#  OR:
-#
-if ! test -e "${_commit}.tar.gz" ;then
-  wget -c "https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
+if test -d linux;then
+  cd linux && git checkout . &&  git clean -fdX
+else
+  git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git
+  cd linux
 fi
-if ! test -d "linux-${_commit}" ;then
-  tar xf ${_commit}.tar.gz
-fi
-cd linux-${_commit}
 
+git checkout 36674db1d99952eb722669a69a659d6ba082847d
 
-# (ksoftirqd rollback before RT patch ...) MUST!!!
-patch -p1 --dry-run -i ../4cd13c21b207e80ddb1144c576500098f2d5f882.patch && \
-patch -p1           -i ../4cd13c21b207e80ddb1144c576500098f2d5f882.patch
-
-# (RT patch ...)
-wget -c -P .. https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/4.14/patch-4.14.24-rt19.patch.xz
-xzcat ../patch-4.14.24-rt19.patch.xz | patch -p1 --dry-run && \
-xzcat ../patch-4.14.24-rt19.patch.xz | patch -p1
+# make bcm2709_defconfig
+# make bcmrpi3_defconfig
 
 # (EXTRA PATCHES for audio application ...)
 #   1. kernel-alsa-support-for-384khz-sample-rates ( ref: https://github.com/DigitalDreamtimeLtd/linux/commit/6224bb2a856146111815a1215732cad18df1d016.patch )
@@ -58,18 +49,15 @@ patch -p1 --dry-run -i ../usb-dsd-quirks-for-4.14.patch && \
 patch -p1           -i ../usb-dsd-quirks-for-4.14.patch
 
 
-# make bcm2709_defconfig
-# cp -v ../config-4.14.26-rt19-v8+ .config
-cp -v ../config-4.14.26-rt19-v8+-armhf .config
+cp -v ../config-4.14-rt-${ARCH} .config
 make oldconfig
-# make  menuconfig
+make menuconfig
 #     set Kernel Features -> Preemption Model = Fully Preemptible Kernel (RT)
 #     set Kernel Features -> Timer frequency = 1000 Hz
 
-
-make clean
+make  clean
 ./scripts/config --disable DEBUG_INFO
-make -j$(nproc)
+make -j`nproc`
 # make -j$(nproc) deb-pkg
 # make -j$(nproc) targz-pkg
 
@@ -83,16 +71,16 @@ export kernelrel=$(make -s kernelrelease)
 export KERN_INSTALL_HOME=$(mktemp -d ./buildroot-XXXXXXXX)
 mkdir -pv $KERN_INSTALL_HOME/boot/overlays
 
-cp -v  arch/arm/boot/Image $KERN_INSTALL_HOME/boot/kernel7.img
 cp -v  .config $KERN_INSTALL_HOME/boot/config-"${kernelrel}"
-cp -v  arch/arm/boot/dts/*dtb $KERN_INSTALL_HOME/boot/
-cp -v  arch/arm/boot/dts/overlays/*.dtbo $KERN_INSTALL_HOME/boot/overlays/
-cp -v  arch/arm/boot/dts/overlays/README $KERN_INSTALL_HOME/boot/overlays/ || true
+cp -v  arch/$ARCH/boot/Image $KERN_INSTALL_HOME/boot/${KERNEL}.img
+cp -v  arch/$ARCH/boot/dts/broadcom/*dtb $KERN_INSTALL_HOME/boot/
+cp -v  arch/$ARCH/boot/dts/overlays/*.dtbo $KERN_INSTALL_HOME/boot/overlays/
+cp -v  arch/$ARCH/boot/dts/overlays/README $KERN_INSTALL_HOME/boot/overlays/ || true
 
 make INSTALL_MOD_PATH=$KERN_INSTALL_HOME modules_install
 make INSTALL_MOD_PATH=$KERN_INSTALL_HOME firmware_install || true # removed in 4.14
 
-kerneltarball=mykernel-"${kernelrel}"-armhf.tgz
+kerneltarball=mykernel-"${kernelrel}"-${ARCH}.tgz
 tar cvzpf ${kerneltarball} -C ${KERN_INSTALL_HOME} -- boot lib  &&  rm -rf ${KERN_INSTALL_HOME}
 
 echo ""
