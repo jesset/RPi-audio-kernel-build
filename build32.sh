@@ -17,7 +17,6 @@ test -d ~/tools || git clone https://github.com/raspberrypi/tools.git ~/tools
 export USE_CCACHE=true
 export CCACHE_DIR=/tmp/ccache.rpikernelrt32
 export CCACHE_LOGFILE=/tmp/ccache.rpikernelrt32/ccache.log
-export CROSS_COMPILE="ccache aarch64-linux-gnu-"
 
 export KERNEL=kernel7
 export ARCH=arm
@@ -37,8 +36,6 @@ fi
 
 git checkout 36674db1d99952eb722669a69a659d6ba082847d
 
-# make bcm2709_defconfig
-# make bcmrpi3_defconfig
 
 # (EXTRA PATCHES for audio application ...)
 #   1. kernel-alsa-support-for-384khz-sample-rates ( ref: https://github.com/DigitalDreamtimeLtd/linux/commit/6224bb2a856146111815a1215732cad18df1d016.patch )
@@ -48,7 +45,8 @@ patch -p1           -i ../kernel-alsa-support-for-384khz-sample-rates-for-4.14.2
 patch -p1 --dry-run -i ../usb-dsd-quirks-for-4.14.patch && \
 patch -p1           -i ../usb-dsd-quirks-for-4.14.patch
 
-
+# make bcm2709_defconfig
+# make bcmrpi3_defconfig
 cp -v ../config-4.14-rt-${ARCH} .config
 make oldconfig
 make menuconfig
@@ -73,7 +71,7 @@ mkdir -pv $KERN_INSTALL_HOME/boot/overlays
 
 cp -v  .config $KERN_INSTALL_HOME/boot/config-"${kernelrel}"
 cp -v  arch/$ARCH/boot/Image $KERN_INSTALL_HOME/boot/${KERNEL}.img
-cp -v  arch/$ARCH/boot/dts/broadcom/*dtb $KERN_INSTALL_HOME/boot/
+cp -v  arch/$ARCH/boot/dts/*dtb $KERN_INSTALL_HOME/boot/
 cp -v  arch/$ARCH/boot/dts/overlays/*.dtbo $KERN_INSTALL_HOME/boot/overlays/
 cp -v  arch/$ARCH/boot/dts/overlays/README $KERN_INSTALL_HOME/boot/overlays/ || true
 
