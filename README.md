@@ -1,20 +1,20 @@
 # Build ARM64 real-time kernel for low-latency music play on RPi
 
 - RT kernel
-- 64bit
+- arm64/aarch64
 - minimalized kernel modules/features for high quality audio playback
     * disable IPv6/Netfilter/serial modules ... (not needed by audio playback, basically)
     * Support PCM 352k8 and 384k sample rates [1]
     * Support More USB DAC (native DSD) [2]
 - only support Raspberry Pi 3 Model B/B+
-- only support ext2/3/4/vfat filesystem
+- only support ext2/3/4/vfat/xfs filesystem
 
 # How to Build
 
     # 1. prepare a Ubuntu 16.04 x86_64 install, upgrade, and get build tools.
     sudo apt update && sudo apt upgrade -y
     sudo reboot
-    sudo apt install -y libncurses5-dev  bc build-essential gcc-aarch64-linux-gnu git unzip
+    sudo apt install -y libncurses5-dev  bc build-essential gcc-aarch64-linux-gnu git unzip ccache
 
     # 2. build kernel
     git clone https://github.com/jesset/RPi-audio-kernel-build.git
@@ -26,7 +26,7 @@
     # 3. install kernel tarball
     # copy kernel tarball to RPi ...
     sudo -i
-    cd / && tar --no-same-owner -xf /path/to/mykernel-XYZ-arm64.tgz
+    cd / && tar --no-same-owner -xf /path/to/mykernel-XYZ-arm64.tar.xz
 
     # 4. upgrade firmware (optional)
     git clone --depth 1 https://github.com/raspberrypi/firmware.git

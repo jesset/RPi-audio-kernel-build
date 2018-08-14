@@ -67,8 +67,8 @@ cp -v  arch/$ARCH/boot/dts/overlays/README $KERN_INSTALL_HOME/boot/overlays/ || 
 make INSTALL_MOD_PATH=$KERN_INSTALL_HOME modules_install
 make INSTALL_MOD_PATH=$KERN_INSTALL_HOME firmware_install || true # removed in 4.14
 
-kerneltarball=mykernel-"${kernelrel}"-${ARCH}.tgz
-tar cvzpf ${kerneltarball} -C ${KERN_INSTALL_HOME} -- boot lib  &&  rm -rf ${KERN_INSTALL_HOME}
+kerneltarball=mykernel-"${kernelrel}"-${ARCH}.tar.xz
+tar cvJpf ${kerneltarball} -C ${KERN_INSTALL_HOME} -- boot lib  &&  rm -rf ${KERN_INSTALL_HOME}
 
 echo ""
 echo "DONE!"
