@@ -22,7 +22,7 @@ index 24febf9..132fcc0 100644
  #define SNDRV_PCM_FMTBIT_S8		_SNDRV_PCM_FMTBIT(S8)
  #define SNDRV_PCM_FMTBIT_U8		_SNDRV_PCM_FMTBIT(U8)
 diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 6aa0813..69c2c1b 100644
+index ab3bf36..eaa81b6 100644
 --- a/sound/core/pcm_native.c
 +++ b/sound/core/pcm_native.c
 @@ -2092,13 +2092,14 @@ static int snd_pcm_hw_rule_sample_bits(struct snd_pcm_hw_params *params,
@@ -42,3 +42,16 @@ index 6aa0813..69c2c1b 100644
  };
  
  const struct snd_pcm_hw_constraint_list snd_pcm_known_rates = {
+diff --git a/sound/soc/codecs/pcm5102a.c b/sound/soc/codecs/pcm5102a.c
+index 8ba322a..51317a1 100644
+--- a/sound/soc/codecs/pcm5102a.c
++++ b/sound/soc/codecs/pcm5102a.c
+@@ -25,7 +25,7 @@ static struct snd_soc_dai_driver pcm5102a_dai = {
+ 	.playback = {
+ 		.channels_min = 2,
+ 		.channels_max = 2,
+-		.rates = SNDRV_PCM_RATE_8000_192000,
++		.rates = SNDRV_PCM_RATE_8000_384000,
+ 		.formats = SNDRV_PCM_FMTBIT_S16_LE |
+ 			   SNDRV_PCM_FMTBIT_S24_LE |
+ 			   SNDRV_PCM_FMTBIT_S32_LE
