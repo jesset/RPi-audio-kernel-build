@@ -21,7 +21,7 @@
     cd RPi-audio-kernel-build
     ./build64.sh
     # or, add a localversion
-    export LOCALVERSION=-my-r1 ; ./build64.sh
+    LOCALVERSION=-my-r1 ./build64.sh
 
     # 3. install kernel tarball
     # copy kernel tarball to RPi ...
