@@ -35,6 +35,11 @@ patch -p1           -i ../kernel-alsa-support-for-384khz-sample-rates-for-4.14.2
 #   2. USB DAC quirks (ref: https://github.com/RoPieee/ropieee-kernel/blob/master/usb-dsd-quirks.patch )
 patch -p1 --dry-run -i ../usb-dsd-quirks-for-4.14.patch && \
 patch -p1           -i ../usb-dsd-quirks-for-4.14.patch
+#   3. pcm5102a && pcm512x support (ref: https://github.com/RoPieee/ropieee-kernel)
+patch -p1 --dry-run -i ../kernel-sound-pcm5102a-add-support-for-384k.patch && \
+patch -p1           -i ../kernel-sound-pcm5102a-add-support-for-384k.patch
+patch -p1 --dry-run -i ../kernel-sound-pcm512x-add-support-for-352k8.patch && \
+patch -p1           -i ../kernel-sound-pcm512x-add-support-for-352k8.patch
 
 
 cp -v ../config-4.14-rt-${ARCH} .config
