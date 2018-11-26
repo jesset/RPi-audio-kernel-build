@@ -41,6 +41,10 @@ patch -p1           -i ../kernel-sound-pcm5102a-add-support-for-384k.patch
 patch -p1 --dry-run -i ../kernel-sound-pcm512x-add-support-for-352k8.patch && \
 patch -p1           -i ../kernel-sound-pcm512x-add-support-for-352k8.patch
 
+patch -p1 --dry-run -i ../kernel-usb-native-dsd-generic-detection.patch && \
+patch -p1           -i ../kernel-usb-native-dsd-generic-detection.patch
+patch -p1 --dry-run -i ../bcm2835-i2s_samplerate_1536000.patch && \
+patch -p1           -i ../bcm2835-i2s_samplerate_1536000.patch
 
 cp -v ../config-4.14-rt-${ARCH} .config
 make oldconfig
