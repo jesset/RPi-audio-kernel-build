@@ -64,7 +64,7 @@ echo "#########################################################"
 
 export kernelrel=$(make -s kernelrelease)
 
-export KERN_INSTALL_HOME=$(mktemp -d ./buildroot-XXXXXXXX)
+export KERN_INSTALL_HOME=$(mktemp -d `pwd`/buildroot-XXXXXXXX)
 mkdir -pv $KERN_INSTALL_HOME/boot/overlays
 
 cp -v  .config $KERN_INSTALL_HOME/boot/config-"${kernelrel}"
@@ -76,8 +76,18 @@ cp -v  arch/$ARCH/boot/dts/overlays/README $KERN_INSTALL_HOME/boot/overlays/ || 
 make INSTALL_MOD_PATH=$KERN_INSTALL_HOME modules_install
 make INSTALL_MOD_PATH=$KERN_INSTALL_HOME firmware_install || true # removed in 4.14
 
+# build kernel tools(perf ..)
+for tool in gpio iio perf spi usb
+do
+    make DESTDIR=${KERN_INSTALL_HOME}/ -C tools/ ${tool}_install  || true
+
+    # pushd tools/$tool
+    # make DESTDIR=${KERN_INSTALL_HOME}/ install
+    # popd
+done
+
 kerneltarball=mykernel-"${kernelrel}"-${ARCH}.tar.xz
-tar cvJpf ${kerneltarball} -C ${KERN_INSTALL_HOME} -- boot lib  &&  rm -rf ${KERN_INSTALL_HOME}
+tar cvJpf ${kerneltarball} -C ${KERN_INSTALL_HOME} -- $(ls ${KERN_INSTALL_HOME}) &&  rm -rf ${KERN_INSTALL_HOME}
 
 echo ""
 echo "DONE!"
