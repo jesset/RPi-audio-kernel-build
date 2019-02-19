@@ -24,7 +24,7 @@ else
   cd linux
 fi
 
-git checkout 32f5076d836518eaf2e7b2caa2e6ee196d27210b
+git checkout 404fa4287aedbfba0daf3b1b792608405adf5f87
 
 #  make bcmrpi3_defconfig
 
@@ -41,8 +41,8 @@ patch -p1           -i ../kernel-sound-pcm5102a-add-support-for-384k.patch
 patch -p1 --dry-run -i ../kernel-sound-pcm512x-add-support-for-352k8.patch && \
 patch -p1           -i ../kernel-sound-pcm512x-add-support-for-352k8.patch
 
-patch -p1 --dry-run -i ../kernel-usb-native-dsd-generic-detection.patch && \
-patch -p1           -i ../kernel-usb-native-dsd-generic-detection.patch
+#patch -p1 --dry-run -i ../kernel-usb-native-dsd-generic-detection.patch && \
+#patch -p1           -i ../kernel-usb-native-dsd-generic-detection.patch
 patch -p1 --dry-run -i ../bcm2835-i2s_samplerate_1536000.patch && \
 patch -p1           -i ../bcm2835-i2s_samplerate_1536000.patch
 
