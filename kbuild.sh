@@ -13,30 +13,30 @@ export LANG=C
 ############################### EDIT THIS ######################################
 ################################################################################
 
-# kernel_src="git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git"
-# kernel_dir=linux-4.14.git  # must ended with .git
-# kernel_config="config-4.14-rt-arm64"
-# # patch_rt=''
-# patch_others=(
-#   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
-#   usb-dsd-quirks-for-4.14.patch
-#   kernel-sound-pcm5102a-add-support-for-384k.patch
-#   kernel-sound-pcm512x-add-support-for-352k8.patch
-#   bcm2835-i2s_samplerate_1536000.patch
-# )
-
-kernel_src="git clone -b 'rpi-4.19.y' --depth 1 https://github.com/raspberrypi/linux.git"
-kernel_dir=linux-4.19.git  # must ended with .git
-#kernel_config="make bcmrpi3_defconfig"
-kernel_config="config-4.19-arm64"
+kernel_src="git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git"
+kernel_dir=linux-4.14.git  # must ended with .git
+kernel_config="config-4.14-rt-arm64"
 # patch_rt=''
 patch_others=(
   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
-  usb-dsd-quirks-for-4.19.patch
+  usb-dsd-quirks-for-4.14.91.patch
   kernel-sound-pcm5102a-add-support-for-384k.patch
   kernel-sound-pcm512x-add-support-for-352k8.patch
   bcm2835-i2s_samplerate_1536000.patch
 )
+
+# kernel_src="git clone -b 'rpi-4.19.y' --depth 1 https://github.com/raspberrypi/linux.git"
+# kernel_dir=linux-4.19.git  # must ended with .git
+# #kernel_config="make bcmrpi3_defconfig"
+# kernel_config="config-4.19-arm64"
+# # patch_rt=''
+# patch_others=(
+#   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
+#   usb-dsd-quirks-for-4.19.patch
+#   kernel-sound-pcm5102a-add-support-for-384k.patch
+#   kernel-sound-pcm512x-add-support-for-352k8.patch
+#   bcm2835-i2s_samplerate_1536000.patch
+# )
 
 # Patches ref:
 #   1. kernel-alsa-support-for-384khz-sample-rates ( ref: https://github.com/DigitalDreamtimeLtd/linux/commit/6224bb2a856146111815a1215732cad18df1d016.patch )
