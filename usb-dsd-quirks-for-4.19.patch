@@ -1,0 +1,39 @@
+--- a/sound/usb/quirks.c	2019-03-24 03:10:14.000000000 +0800
++++ b/sound/usb/quirks.c.new	2019-04-25 23:44:23.028000000 +0800
+@@ -1369,6 +1369,13 @@
+ 	case USB_ID(0x22d9, 0x0461): /* OPPO UDP-205 */
+ 	case USB_ID(0x2522, 0x0012): /* LH Labs VI DAC Infinity */
+ 	case USB_ID(0x2772, 0x0230): /* Pro-Ject Pre Box S2 Digital */
++	case USB_ID(0x20b1, 0x302a): /* Matrix Audio Quattro II */
++	case USB_ID(0x2522, 0x0007): /* LH Labs Geek Out 1V5 */
++	case USB_ID(0x2522, 0x0009): /* LH Labs Geek Pulse X Inifinity 2V0 */
++	case USB_ID(0x25ce, 0x001f): /* Mytek Brooklyn DAC */
++	case USB_ID(0x25ce, 0x0021): /* Mytek Manhattan DAC */
++	case USB_ID(0x25ce, 0x8025): /* Mytek Brooklyn DAC+ */
++	case USB_ID(0x2622, 0x0666): /* QUAD Artera */
+ 		if (fp->altsetting == 2)
+ 			return SNDRV_PCM_FMTBIT_DSD_U32_BE;
+ 		break;
+@@ -1378,6 +1385,7 @@
+ 	case USB_ID(0x16d0, 0x09dd): /* Encore mDSD */
+ 	case USB_ID(0x0d8c, 0x0316): /* Hegel HD12 DSD */
+ 	case USB_ID(0x16b0, 0x06b2): /* NuPrime DAC-10 */
++	case USB_ID(0x16d0, 0x06b2): /* NuPrime DAC-10H */
+ 	case USB_ID(0x16d0, 0x0733): /* Furutech ADL Stratos */
+ 	case USB_ID(0x16d0, 0x09db): /* NuPrime Audio DAC-9 */
+ 	case USB_ID(0x1db5, 0x0003): /* Bryston BDA3 */
+@@ -1398,6 +1406,14 @@
+ 	case USB_ID(0x27f7, 0x3002): /* W4S DAC-2v2SE */
+ 	case USB_ID(0x29a2, 0x0086): /* Mutec MC3+ USB */
+ 	case USB_ID(0x6b42, 0x0042): /* MSB Technology */
++	case USB_ID(0x16d0, 0x09d8): /* NuPrime IDA-8 */
++	case USB_ID(0x16d0, 0x06b4): /* NuPrime HD-AVP/AVA */
++	case USB_ID(0x20b1, 0x300f): /* Engineered Electronics Stereo Playback Interface */
++	case USB_ID(0x20b1, 0x3036): /* Holo Springs Level 3 R2R DAC */
++	case USB_ID(0x0216, 0xce02): /* OCTAVART Champs-Elysees */
++	case USB_ID(0x1511, 0x0052): /* AURALiC VEGA G2 */
++	case USB_ID(0x20b1, 0x3073): /* Soekris dac1101 */
++	case USB_ID(0x20a0, 0x4143): /* WaveIO USB Audio 2.0 */
+ 		if (fp->altsetting == 3)
+ 			return SNDRV_PCM_FMTBIT_DSD_U32_BE;
+ 		break;
