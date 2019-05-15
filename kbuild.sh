@@ -13,14 +13,16 @@ export LANG=C
 ############################### EDIT THIS ######################################
 ################################################################################
 
-# kernel_src="https://github.com/ayufan-rock64/linux-mainline-kernel/archive/5.0.0-1105-ayufan.tar.gz"
-# kernel_dir=linux-mainline-kernel-5.0.0-1105-ayufan
-# #kernel_config="make rockchip_linux_defconfig"
-# kernel_config=config-5.0.0-1105-ayufan-jesset11
-# patch_rt='https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/5.0/older/patch-5.0.3-rt1.patch.gz'
+# kernel_src="git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git"
+# kernel_dir=linux.git
+# kernel_config="config-4.14-rt-arm64"
+# # patch_rt=''
 # patch_others=(
-#   usb-dsd-quirks-for-4.19.patch
 #   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
+#   usb-dsd-quirks-for-4.14.patch
+#   kernel-sound-pcm5102a-add-support-for-384k.patch
+#   kernel-sound-pcm512x-add-support-for-352k8.patch
+#   bcm2835-i2s_samplerate_1536000.patch
 # )
 
 kernel_src="git clone -b 'rpi-4.19.y' --depth 1 https://github.com/raspberrypi/linux.git"
