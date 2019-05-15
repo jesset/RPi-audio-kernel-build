@@ -171,7 +171,7 @@ do
     # popd
 done
 
-kerneltarball=kernelbuild-"${kernelrel}"-${ARCH}-${BOARD}.tar.xz
+kerneltarball="../kernelbuild-${kernelrel}-${ARCH}-${BOARD}.tar.xz"
 tar cvJpf ${kerneltarball} -C ${KERN_INSTALL_HOME} -- $(ls ${KERN_INSTALL_HOME}) &&  rm -rf ${KERN_INSTALL_HOME}
 
 # make bindeb-pkg -j`nproc`
