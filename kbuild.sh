@@ -14,7 +14,7 @@ export LANG=C
 ################################################################################
 
 # kernel_src="git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git"
-# kernel_dir=linux.git
+# kernel_dir=linux-4.14.git  # must ended with .git
 # kernel_config="config-4.14-rt-arm64"
 # # patch_rt=''
 # patch_others=(
@@ -26,7 +26,7 @@ export LANG=C
 # )
 
 kernel_src="git clone -b 'rpi-4.19.y' --depth 1 https://github.com/raspberrypi/linux.git"
-kernel_dir=linux.git
+kernel_dir=linux-4.19.git  # must ended with .git
 #kernel_config="make bcmrpi3_defconfig"
 kernel_config="config-4.19-arm64"
 # patch_rt=''
@@ -66,7 +66,7 @@ download_fist(){
     elif echo "${file}" | grep -qP '^git';then
       echo "# INFO: git clone ${file_local} to ${todir} ..."
       eval "${file} ${file_local}"
-      # mv ${file_local%.git} ${file_local}
+      mv "${file_local}" "${kernel_dir}"
     else
       echo "# WARN: ${file_local} not exist in ${todir}, and no way to download, nothing can be done, abort."
       return 1
@@ -82,12 +82,17 @@ if ! test -d ${CCACHE_DIR};then
   mkdir ${CCACHE_DIR}
 fi
 
-## kernel source:
-kernel_src_local="${kernel_src##*/}"
+## kernel source download:
+if echo ${kernel_dir} | grep -Pq '\.git$' ;then
+  kernel_src_local="${kernel_dir}"
+else
+  kernel_src_local="${kernel_src##*/}"
+fi
 if ! test -e ${kernel_src_local};then
   download_fist "${kernel_src}" .
 fi
 
+## kernel source decompress && cleanup && cd into:
 if echo ${kernel_dir} | grep -Pq '\.git$' ;then
   # git cloned repo ...
   cd ${kernel_dir}
