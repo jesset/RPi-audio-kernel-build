@@ -13,6 +13,7 @@ export LANG=C
 ############################### EDIT THIS ######################################
 ################################################################################
 
+## Kernel 4.14 
 kernel_src="git clone -b 'rpi-4.14.y-rt' --depth 1 https://github.com/raspberrypi/linux.git"
 kernel_dir=linux-4.14.git  # must ended with .git
 kernel_config="config-4.14-rt-arm64"
@@ -25,11 +26,13 @@ patch_others=(
   bcm2835-i2s_samplerate_1536000.patch
 )
 
+
+## Kernel 4.19
 # kernel_src="git clone -b 'rpi-4.19.y' --depth 1 https://github.com/raspberrypi/linux.git"
 # kernel_dir=linux-4.19.git  # must ended with .git
 # #kernel_config="make bcmrpi3_defconfig"
-# kernel_config="config-4.19-arm64"
-# # patch_rt=''
+# kernel_config="config-4.19-arm64-NORT"
+# # patch_rt='patch-4.19.37-rt20.patch.gz'
 # patch_others=(
 #   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
 #   usb-dsd-quirks-for-4.19.patch
@@ -97,7 +100,7 @@ if echo ${kernel_dir} | grep -Pq '\.git$' ;then
   # git cloned repo ...
   cd ${kernel_dir}
   git checkout .
-  git clean -fdX
+  git clean -fd
 else
   # tar balls ...
   if test -d ${kernel_dir} ;then
@@ -123,6 +126,7 @@ if [[ -n "${patch_rt}" ]];then
   else
     echo "WARN: RT patch defined, but dry-run failed, aborted."
     sleep 3
+    exit 1
   fi
 fi
 
