@@ -31,8 +31,8 @@ patch_others=(
 # kernel_src="git clone -b 'rpi-4.19.y' --depth 1 https://github.com/raspberrypi/linux.git"
 # kernel_dir=linux-4.19.git  # must ended with .git
 # #kernel_config="make bcmrpi3_defconfig"
-# kernel_config="config-4.19-arm64-NORT"
-# # patch_rt='patch-4.19.37-rt20.patch.gz'
+# kernel_config="config-4.19-arm64"
+# patch_rt='patch-4.19.50-rt22.patch.gz'
 # patch_others=(
 #   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
 #   usb-dsd-quirks-for-4.19.patch
@@ -172,15 +172,15 @@ cp -v  arch/$ARCH/boot/dts/overlays/README $KERN_INSTALL_HOME/boot/overlays/ || 
 
 make INSTALL_MOD_PATH=$KERN_INSTALL_HOME modules_install
 
-# build kernel tools(perf ..)
-for tool in gpio iio perf spi usb
-do
-    make DESTDIR=${KERN_INSTALL_HOME}/ -C tools/ ${tool}_install  || true
-
-    # pushd tools/$tool
-    # make DESTDIR=${KERN_INSTALL_HOME}/ install
-    # popd
-done
+## build kernel tools(perf ..)
+#for tool in gpio iio perf spi usb
+#do
+#    make DESTDIR=${KERN_INSTALL_HOME}/ -C tools/ ${tool}_install  || true
+#
+#    # pushd tools/$tool
+#    # make DESTDIR=${KERN_INSTALL_HOME}/ install
+#    # popd
+#done
 
 kerneltarball="../kernelbuild-${kernelrel}-${ARCH}-${BOARD}.tar.xz"
 tar cvJpf ${kerneltarball} -C ${KERN_INSTALL_HOME} -- $(ls ${KERN_INSTALL_HOME}) &&  rm -rf ${KERN_INSTALL_HOME}
