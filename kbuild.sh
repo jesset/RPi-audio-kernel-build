@@ -37,7 +37,6 @@ patch_others=(
 #   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
 #   usb-dsd-quirks-for-4.19.patch
 #   kernel-sound-pcm5102a-add-support-for-384k.patch
-#   kernel-sound-pcm512x-add-support-for-352k8.patch
 #   bcm2835-i2s_samplerate_1536000.patch
 # )
 
@@ -100,6 +99,7 @@ if echo ${kernel_dir} | grep -Pq '\.git$' ;then
   # git cloned repo ...
   cd ${kernel_dir}
   git checkout .
+  git clean -fdX
   git clean -fd
 else
   # tar balls ...
