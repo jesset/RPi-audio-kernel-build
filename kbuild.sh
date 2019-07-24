@@ -43,8 +43,8 @@ export LANG=C
 kernel_src="git clone -b 'rpi-4.19.y-rt' --depth 1 https://github.com/raspberrypi/linux.git"
 kernel_dir=linux-4.19.git  # must ended with .git
 kernel_config="config-4.19-arm64-RT"
-#kernel_config="make bcm2711_defconfig"
-patch_rt='patch-4.19.50-rt22.patch.gz'
+# kernel_config="make bcm2711_defconfig"
+# patch_rt='https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/4.19/patch-4.19.59-rt24.patch.gz'
 patch_others=(
   kernel-alsa-support-for-384khz-sample-rates-for-4.14.26.patch
   usb-dsd-quirks-for-4.19.patch
