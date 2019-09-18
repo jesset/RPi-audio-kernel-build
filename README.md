@@ -6,7 +6,7 @@
     * disable IPv6/Netfilter/serial modules ... (not needed by audio playback, basically)
     * Support PCM 352k8 and 384k sample rates [1]
     * Support More USB DAC (native DSD) [2]
-- only support Raspberry Pi 3 Model B/B+
+- only support Raspberry Pi 3B/3B+/4B
 - only support ext2/3/4/vfat/xfs filesystem
 
 # How to Build
@@ -19,14 +19,14 @@
     # 2. build kernel
     git clone https://github.com/jesset/RPi-audio-kernel-build.git
     cd RPi-audio-kernel-build
-    ./build64.sh
+    ./kbuild.sh
     # or, add a localversion
-    LOCALVERSION=-my-r1 ./build64.sh
+    LOCALVERSION=-my-r1 ./kbuild.sh
 
     # 3. install kernel tarball
     # copy kernel tarball to RPi ...
     sudo -i
-    cd / && tar --no-same-owner -xf /path/to/mykernel-XYZ-arm64.tar.xz
+    cd / && tar --no-same-owner -xf /path/to/kernelbuild-XYZ.tar.xz
 
     # 4. upgrade firmware (optional)
     git clone --depth 1 https://github.com/raspberrypi/firmware.git
